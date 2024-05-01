@@ -14,7 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function ValidacaoEmail() {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");

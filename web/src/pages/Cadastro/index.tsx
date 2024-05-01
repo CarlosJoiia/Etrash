@@ -67,10 +67,12 @@ export default function New() {
     );
   }
   async function onSubmit() {
-    const URL = process.env.BACKEND_URL;
+    const URL = process.env.REACT_APP_BACKEND_URL;
     const cnpj = formsValues.cnpj.replace(/\D/g, "");
     const cnpjAsNumber = parseFloat(cnpj);
     const Options = formsValues.category;
+
+    console.log(URL + " aaaaaaa");
 
     if (Options !== "PessoaFisica") {
       if (formsValues.coords[0] !== 0) {

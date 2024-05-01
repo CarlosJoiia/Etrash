@@ -18,7 +18,7 @@ interface LocationState {
 }
 
 export default function ValidarEmail() {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const location = useLocation<LocationState>();
   const { email } = location.state || {};
   const { option } = location.state || {};
