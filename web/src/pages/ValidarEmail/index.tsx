@@ -23,7 +23,7 @@ export default function ValidacaoEmail() {
   useEffect(() => {
     async function enviarRequisicao() {
       try {
-        const response = await fetch(URL + "Validacao" + option, {
+        const response = await fetch(`${URL}Validacao${option}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export default function ValidacaoEmail() {
     }
 
     enviarRequisicao();
-  }, []);
+  }, [URL, option, token]);
 
   return (
     <Container>
