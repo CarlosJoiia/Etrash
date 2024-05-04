@@ -110,6 +110,7 @@ export async function ValidarCooperativa(request: Request, response: Response) {
   const email = process.env.EMAIL;
   const senha = process.env.SENHA;
   const KEYcodi = process.env.KEYCOD;
+  const URL = process.env.URL_SITE;
 
   if (!email || !senha || !KEYcodi) {
     return response
@@ -235,7 +236,7 @@ export async function ValidarCooperativa(request: Request, response: Response) {
             <p class="sub-title">Email: ${cooperativa.email} </p>
             <p class="sub-title">Olá,</p>
             <p class="sub-title">Para ativar sua conta e começar a utilizar nossa plataforma, por favor, confirme seu endereço de email clicando no botão abaixo:</p>
-            <a id="submitButton" href="http://localhost:3000/ValidacaoEmail?option=${cooperativa.option}&token=${token}" target="_blank" class="button">Cadastre Agora!!</a>
+            <a id="submitButton" href="${URL}/ValidacaoEmail?option=${cooperativa.option}&token=${token}" target="_blank" class="button">Cadastre Agora!!</a>
             <p class="sub-title">Se você não solicitou essa confirmação, ignore este email.</p>
             <p class="sub-title">Obrigado!</p>
           </div>
