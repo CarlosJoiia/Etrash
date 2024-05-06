@@ -63,12 +63,9 @@ export default function Detail() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require("../../assets/eco.jpg")}
-            style={styles.backArrow}
-          />
-        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+        ></TouchableOpacity>
         <Text style={styles.title}>{params.name}</Text>
       </View>
 
@@ -94,10 +91,6 @@ export default function Detail() {
 
       <View style={styles.infoContainer}>
         <View style={styles.addressContainer}>
-          <Image
-            source={require("../../assets/eco.jpg")}
-            style={styles.locationIcon}
-          />
           <View>
             <Text style={styles.section}>Endereço</Text>
             <Text style={styles.text}>{address.addressLine}</Text>
@@ -140,6 +133,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
+    marginLeft: "2%",
     color: "#322153",
     fontSize: 24,
     fontWeight: "bold",
