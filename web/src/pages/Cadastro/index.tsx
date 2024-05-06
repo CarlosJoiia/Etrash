@@ -18,7 +18,7 @@ import { categories } from "./categories";
 import useGetLocation from "../../hooks/useGetLocation";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import ObLocal from "../Localização";
+import ObLocal from "../Localizacao";
 import Joyride from "react-joyride";
 
 export default function New() {
@@ -42,6 +42,7 @@ export default function New() {
   if (!coords) {
     return <ObLocal />;
   }
+
   function LocationMarker() {
     const [position, setPosition] = useState<LatLngExpression | null>(null);
 
@@ -67,15 +68,57 @@ export default function New() {
     );
   }
   async function onSubmit() {
-    const URL = process.env.REACT_APP_BACKEND_URL;
-    const cnpj = formsValues.cnpj.replace(/\D/g, "");
-    const cnpjAsNumber = parseFloat(cnpj);
-    const Options = formsValues.category;
+    try {
+      const URL = process.env.REACT_APP_BACKEND_URL;
+      const cnpj = formsValues.cnpj.replace(/\D/g, "");
+      const cnpjAsNumber = parseFloat(cnpj);
+      const Options = formsValues.category;
 
-    console.log(URL + " aaaaaaa");
+      if (Options !== "PessoaFisica") {
+        if (formsValues.coords[0] !== 0) {
+          const request = await fetch(URL + Options, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formsValues.name,
+              description: formsValues.description,
+              contact: formsValues.contact,
+              cnpj: cnpjAsNumber,
+              email: formsValues.email,
+              senha: formsValues.senha,
+              category: formsValues.category,
+              latitude: formsValues.coords[0],
+              longitude: formsValues.coords[1],
+              status: formsValues.status,
+            }),
+          });
 
-    if (Options !== "PessoaFisica") {
-      if (formsValues.coords[0] !== 0) {
+          const data = await request.json();
+          if (request.ok) {
+            toast(data.mensagem, {
+              type: "success",
+              autoClose: 4000,
+            });
+            history.push({
+              pathname: "/ValidarEmail",
+              state: { email: formsValues.email, option: Options },
+            });
+            setTimeout(() => window.location.reload(), 4500);
+          } else {
+            toast(data.mensagem, {
+              type: "error",
+              autoClose: 8000,
+            });
+          }
+        } else {
+          toast("Coloque o Maker no Mapa", {
+            type: "error",
+            autoClose: 8000,
+          });
+        }
+      } else {
         const request = await fetch(URL + Options, {
           method: "POST",
           headers: {
@@ -83,14 +126,10 @@ export default function New() {
           },
           body: JSON.stringify({
             name: formsValues.name,
-            description: formsValues.description,
             contact: formsValues.contact,
-            cnpj: cnpjAsNumber,
             email: formsValues.email,
             senha: formsValues.senha,
             category: formsValues.category,
-            latitude: formsValues.coords[0],
-            longitude: formsValues.coords[1],
             status: formsValues.status,
           }),
         });
@@ -112,45 +151,10 @@ export default function New() {
             autoClose: 8000,
           });
         }
-      } else {
-        toast("Coloque o Maker no Mapa", {
-          type: "error",
-          autoClose: 8000,
-        });
       }
-    } else {
-      const request = await fetch(URL + Options, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formsValues.name,
-          contact: formsValues.contact,
-          email: formsValues.email,
-          senha: formsValues.senha,
-          category: formsValues.category,
-          status: formsValues.status,
-        }),
-      });
-
-      const data = await request.json();
-      if (request.ok) {
-        toast(data.mensagem, {
-          type: "success",
-          autoClose: 4000,
-        });
-        history.push({
-          pathname: "/ValidarEmail",
-          state: { email: formsValues.email, option: Options },
-        });
-        setTimeout(() => window.location.reload(), 4500);
-      } else {
-        toast(data.mensagem, {
-          type: "error",
-          autoClose: 8000,
-        });
-      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Erro ao enviar formulário.");
     }
   }
 
