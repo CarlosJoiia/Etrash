@@ -1,5 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+
 import {
   Text,
   View,
@@ -10,9 +11,25 @@ import {
 } from "react-native";
 
 export default function Chat() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: "Chat de Mensagens",
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
-      <Text>aaaa</Text>
+      <View style={styles.headercontainer}>
+        <Text style={styles.title}>Em Desenvolvimento</Text>
+      </View>
+      <View style={styles.loadingContainer}>
+        <Image
+          source={require("../../assets/OIG1__2_-removebg-preview.png")}
+          style={styles.backArrow}
+        ></Image>
+      </View>
     </View>
   );
 }
@@ -27,6 +44,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  backArrow: {
+    width: "80%",
+    height: "80%",
+    marginRight: 10,
+  },
+  headercontainer: {
+    height: "20%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    padding: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -34,45 +65,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F0F0F5",
   },
-  backArrow: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
+
   title: {
     color: "#322153",
     fontSize: 24,
     fontWeight: "bold",
-  },
-  map: {
-    flex: 1,
-    marginBottom: 20,
-  },
-  infoContainer: {
-    backgroundColor: "#F0F0F5",
-    padding: 20,
-    elevation: 3,
-    borderRadius: 10,
-    marginHorizontal: 10,
-  },
-  addressContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  locationIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  contactContainer: {
-    marginBottom: 20,
-  },
-  section: {
-    color: "#322153",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
   },
   text: {
     color: "#6C6C80",
