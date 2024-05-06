@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 export async function savePessoa(request: Request, response: Response) {
   const pessoaFisica = request.body;
 
-  const verificarCooperativa = await prisma.pessoafisica.findFirst({
+  const verificarCooperativa = await prisma.cooperativa.findFirst({
     where: {
       OR: [{ email: pessoaFisica.email }, { contact: pessoaFisica.contact }],
     },
